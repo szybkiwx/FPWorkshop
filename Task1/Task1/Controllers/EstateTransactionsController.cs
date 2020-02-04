@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model;
 using Repositories;
 using FSharpInterop.BusinessRules;
+using Microsoft.FSharp.Collections;
 
 namespace WebApp.Controllers
 {
@@ -21,32 +22,30 @@ namespace WebApp.Controllers
 
         // GET api/estatetransactions
         [HttpGet]
-        public ActionResult<IEnumerable<EstateTransaction>> Get() => Ok(_repo.GetEstateTransactions());
+        public ActionResult<IEnumerable<EstateTransaction>> Get() => _repo.GetEstateTransactions().ToList();
 
         // GET api/getareal
         [HttpGet]
         [Route("areal")]
-        public ActionResult<IEnumerable<EstateTransaction>> GetAreal(string city)
+        public ActionResult<double> GetAreal(string city)
         {
             var transactions = _repo.GetEstateTransactions();
-            var result = EstateTransactionServices.GetAverageResidentialArealInCity(city, transactions);
-            return Ok(result);
+            return EstateTransactionServices.GetAverageResidentialArealInCity(city, transactions);
         }
 
         // GET api/amount
         [HttpGet]
         [Route("amount")]
-        public ActionResult<IEnumerable<EstateTransaction>> GetTotalTransactionAmount(string zip)
+        public ActionResult<decimal> GetTotalTransactionAmount(string zip)
         {
             var transactions = _repo.GetEstateTransactions();
-            var result = EstateTransactionServices.GetTotalTransactionAmountFromAreaByZip(zip, transactions);
-            return Ok(result);
+            return EstateTransactionServices.GetTotalTransactionAmountFromAreaByZip(zip, transactions);
         }
 
         // GET api/bedrooms
         [HttpGet]
         [Route("bedrooms")]
-        public ActionResult<IEnumerable<EstateTransaction>> GetAverageBedrooms(string date1, string date2)
+        public ActionResult<double> GetAverageBedrooms(string date1, string date2)
         {
             var transactions = _repo.GetEstateTransactions();
             var result = EstateTransactionServices.GetAverageBedroomsSoldInBetweenDates(DateTime.Parse(date1), DateTime.Parse(date2), transactions);
@@ -56,11 +55,10 @@ namespace WebApp.Controllers
         // GET api/bedrooms
         [HttpGet]
         [Route("avgprices")]
-        public ActionResult<IEnumerable<EstateTransaction>> GetAveragePrices()
+        public ActionResult<FSharpMap<string, double>> GetAveragePrices()
         {
             var transactions = _repo.GetEstateTransactions();
-            var result = EstateTransactionServices.GetAveragePricePerSquareFeetByCity(transactions);
-            return Ok(result);
+            return EstateTransactionServices.GetAveragePricePerSquareFeetByCity(transactions);
         }
     }
 }

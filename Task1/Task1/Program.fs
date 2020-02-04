@@ -8,10 +8,18 @@ let readLines (filePath:string) = seq {
 
 let readData fileName = readLines fileName |> Seq.map int
 
-let part1 data = 0
+let part1 data = data |> Seq.map int |> Seq.sum
 
-let part2 data = 0
+let part2 data = 
+    let rec find input acc history =
+        match input with
+            | [] -> find data acc history
+            | head::rest -> if List.contains acc history then 
+                                acc 
+                            else 
+                                find rest (acc+head) (acc::history)
 
+    find data 0 []
 
 [<EntryPoint>]
 let main argv =

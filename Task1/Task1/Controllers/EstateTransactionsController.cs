@@ -52,5 +52,15 @@ namespace WebApp.Controllers
             var result = EstateTransactionServices.GetAverageBedroomsSoldInBetweenDates(DateTime.Parse(date1), DateTime.Parse(date2), transactions);
             return Ok(result);
         }
+
+        // GET api/bedrooms
+        [HttpGet]
+        [Route("avgprices")]
+        public ActionResult<IEnumerable<EstateTransaction>> GetAveragePrices()
+        {
+            var transactions = _repo.GetEstateTransactions();
+            var result = EstateTransactionServices.GetAveragePricePerSquareFeetByCity(transactions);
+            return Ok(result);
+        }
     }
 }

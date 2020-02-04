@@ -14,7 +14,7 @@ module EstateTransactionServices =
     let GetTotalTransactionAmountFromAreaByZip (zip:string) (transactions: seq<EstateTransaction>) = 
         List.ofSeq(transactions)
             |> List.filter(fun x -> x.ZipCode = zip)
-            |> List.sumBy (fun x -> decimal x.Price) 
+            |> List.sumBy (fun x -> x.Price) 
 
     let GetAverageBedroomsSoldInBetweenDates (date1:DateTime) (date2:DateTime) (transactions: seq<EstateTransaction>) = 
         List.ofSeq(transactions)
@@ -23,7 +23,8 @@ module EstateTransactionServices =
             |> List.average
 
     let GetAveragePricePerSquareFeetByCity (transactions: seq<EstateTransaction>)  =
-        Map.empty<string, float>
-    
-
+        List.ofSeq(transactions)
+            |> List.groupBy (fun x -> x.City)
+            |> List.map(fun (c, t) -> c, t |> List.map (fun x -> x.Price) |> List.average)
+            |> Map.ofList             
 

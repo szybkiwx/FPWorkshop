@@ -55,10 +55,10 @@ namespace WebApp.Controllers
         // GET api/bedrooms
         [HttpGet]
         [Route("avgprices")]
-        public ActionResult<FSharpMap<string, double>> GetAveragePrices()
+        public ActionResult<Dictionary<string, double>> GetAveragePrices()
         {
             var transactions = _repo.GetEstateTransactions();
-            return EstateTransactionServices.GetAveragePricePerSquareFeetByCity(transactions);
+            return EstateTransactionServices.GetAveragePricePerSquareFeetByCity(transactions).ToDictionary(x => x.Key, x => x.Value);
         }
     }
 }

@@ -5,16 +5,16 @@ module EstateTransactionServices =
     open System.Collections.Generic
     open Model
 
-    let GetAverageResidentialArealInCity (city:string) (transactions: IEnumerable<EstateTransaction>) =
+    let GetAverageResidentialArealInCity (city:string) (transactions: seq<EstateTransaction>) =
         0.0
 
-    let GetTotalTransactionAmountFromAreaByZip (zip:string) (transactions: IEnumerable<EstateTransaction>) = 
+    let GetTotalTransactionAmountFromAreaByZip (zip:string) (transactions: seq<EstateTransaction>) = 
         0m
 
-    let GetAverageBedroomsSoldInBetweenDates (date1:DateTime) (date2:DateTime) (transactions: IEnumerable<EstateTransaction>) = 
+    let GetAverageBedroomsSoldInBetweenDates (date1:DateTime) (date2:DateTime) (transactions: seq<EstateTransaction>) = 
         0.0
 
-    let GetAveragePricePerSquareFeetByCity (transactions: IEnumerable<EstateTransaction>)  =
+    let GetAveragePricePerSquareFeetByCity (transactions: seq<EstateTransaction>)  =
         Map.empty<string, float>
     
 

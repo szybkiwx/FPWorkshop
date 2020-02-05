@@ -55,7 +55,7 @@ namespace WebApp.Controllers
         // GET api/bedrooms
         [HttpGet]
         [Route("avgprices")]
-        public ActionResult<Dictionary<string, double>> GetAveragePrices()
+        public ActionResult<Dictionary<string, decimal>> GetAveragePrices()
         {
             var transactions = _repo.GetEstateTransactions();
             return EstateTransactionServices.GetAveragePricePerSquareFeetByCity(transactions).ToDictionary(x => x.Key, x => x.Value);

@@ -15,7 +15,7 @@ module EstateTransactionServices =
         0.0
 
     let GetAveragePricePerSquareFeetByCity (transactions: seq<EstateTransaction>)  =
-        Map.empty<string, float>
+        Map.empty<string, decimal>
     
 
 
